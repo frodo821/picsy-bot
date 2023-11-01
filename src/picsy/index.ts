@@ -111,6 +111,13 @@ export default class PICSYManager {
       await this.save();
       logger.info('PICSY data saved.');
     }));
+
+    process.on('beforeExit', async () => {
+      logger.info('saving PICSY data...');
+      await this.save();
+      logger.info('PICSY data saved.');
+      this.cancelTasks();
+    });
   }
 
   cancelTasks() {
