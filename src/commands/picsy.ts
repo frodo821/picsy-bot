@@ -1,6 +1,9 @@
 import { SlashCommandBuilder } from "discord.js";
 import { register } from "./registrar";
 import PICSYManager from "../picsy";
+import { getLogger } from "../logging";
+
+const logger = getLogger('picsy.discord.commands');
 
 const tip = new SlashCommandBuilder()
   .setName('tip')
@@ -54,9 +57,11 @@ register(karma, async (interaction) => {
   const evals = picsy.evaluation;
   const entries = Object.entries(evals);
 
+  logger.info(`evaluations: ${JSON.stringify(evals)}`);
+
   entries.sort((a, b) => b[1] - a[1]);
   if (!(sender.id in evals)) {
-    await interaction.followUp({ content: `あなたのkarmaは 1.0 です。ランキング: ${entries.length + 1}位`, ephemeral: true });
+    await interaction.followUp({ content: `あなたの karma はまだありません。ランキング: ${entries.length + 1}位`, ephemeral: true });
     return;
   }
 
