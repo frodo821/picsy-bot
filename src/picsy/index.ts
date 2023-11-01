@@ -1,7 +1,7 @@
 import { PICSY } from './picsy';
 import { DATA_DIR } from '../settings';
 import { join } from 'path';
-import { copyFileSync, existsSync, readFileSync, rm, rmSync, writeFileSync } from 'fs';
+import { copyFileSync, existsSync, readFileSync, rmSync, writeFileSync } from 'fs';
 import { getLogger } from '../logging';
 import { ScheduledTask, schedule } from 'node-cron';
 
@@ -96,7 +96,7 @@ export default class PICSYManager {
 
     this.cancelTasks();
 
-    this.tasks.push(schedule('0 0 * * *', () => {
+    this.tasks.push(schedule('0 * * * *', () => {
       logger.info('recalculating evaluations...');
       if (this.picsy === null) {
         logger.error('PICSY not initialized');
@@ -106,7 +106,7 @@ export default class PICSYManager {
       logger.info('evaluations updated.');
     }));
 
-    this.tasks.push(schedule('0 */15 * * *', async () => {
+    this.tasks.push(schedule('*/15 * * * *', async () => {
       logger.info('saving PICSY data...');
       await this.save();
       logger.info('PICSY data saved.');
