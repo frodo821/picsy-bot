@@ -1,5 +1,5 @@
 import { SlashCommandBuilder } from "discord.js";
-import { register } from "./registerer";
+import { register } from "./registrar";
 import PICSYManager from "../picsy";
 
 const tip = new SlashCommandBuilder()

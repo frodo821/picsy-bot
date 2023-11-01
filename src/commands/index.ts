@@ -1,4 +1,4 @@
-import { register, commands, initializeCommands } from "./registerer";
+import { register, commands, initializeCommands } from "./registrar";
 import "./picsy";
 
 export { register, commands, initializeCommands };
