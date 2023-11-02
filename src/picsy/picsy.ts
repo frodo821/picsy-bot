@@ -83,11 +83,7 @@ export class PICSY {
 
   private normalized() {
     const v = this.calcDecay();
-    logger.info(`decay matrix: \n${v}`);
-
     const sum = v.sum(0);
-
-    logger.info(`rowwise sum: \n${sum}`);
 
     const ret = v.div(sum, 0);
     logger.info(`normalized evaluation matrix: \n${ret}`);
