@@ -89,14 +89,7 @@ export class PICSY {
 
     logger.info(`rowwise sum: \n${sum}`);
 
-    for (let i = 0; i < sum.length; i++) {
-      if (sum[i] === 0) {
-        sum[i] = 1;
-      }
-    }
-
     const ret = v.div(sum, 0);
-
     logger.info(`normalized evaluation matrix: \n${ret}`);
 
     return ret;
@@ -109,9 +102,6 @@ export class PICSY {
     }
 
     const { wreal, wimag, eigenvector } = eig(SqMat2d.fromMat2d(this.normalized()));
-
-    console.log(wreal, wimag);
-    console.log(eigenvector.toString());
 
     let idx = 0;
     let md = Infinity;
