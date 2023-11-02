@@ -1,5 +1,8 @@
 import { dgeev, NoEigenvector, Eigenvector } from "nlapack";
 import { SqMat2d } from "./mat2d";
+import { getLogger } from "../logging";
+
+const logger = getLogger('picsy.core');
 
 const MS_PER_DAY = 1000 * 60 * 60 * 24;
 
@@ -150,5 +153,7 @@ export class PICSY {
     this._lastPaid[fromIdx][toIdx] = now;
     this._val.set(fromIdx, toIdx, this._val.get(fromIdx, toIdx) * Math.pow(1 - this._decay, elapsed / MS_PER_DAY) + amount);
     this._eig = null;
+
+    logger.info(`\n${this._val}`);
   }
 }
