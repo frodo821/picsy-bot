@@ -86,6 +86,9 @@ export class PICSY {
     }
 
     const { wreal, wimag, eigenvector } = eig(SqMat2d.fromMat2d(this.calcDecay().mul(this._val.sum())));
+
+    console.log(wreal, wimag, eigenvector);
+
     let idx = 0;
     let md = Infinity;
     for (let i = 1; i < wreal.length; i++) {
@@ -104,9 +107,9 @@ export class PICSY {
   }
 
   get evaluation(): Float64Array {
-    if (!this._eig) {
+    // if (!this._eig) {
       this.updateEig();
-    }
+    // }
     return this._eig!;
   }
 
