@@ -57,7 +57,7 @@ register(karma, async (interaction) => {
   const evals = picsy.evaluation;
   const entries = Object.entries(evals);
 
-  logger.info(`evaluations: ${JSON.stringify(evals)}`);
+  logger.debug(`evaluations: ${JSON.stringify(evals)}`);
 
   entries.sort((a, b) => b[1] - a[1]);
   if (!(sender.id in evals)) {

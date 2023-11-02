@@ -85,6 +85,20 @@ export class Logger {
   static readonly root = new Logger("(root)", NameLevels.INFO, null);
 
   static {
+    if ('LOGLEVEL' in process.env) {
+      const level = process.env.LOGLEVEL!;
+
+      if (level in NameLevels) {
+        this.root.level = NameLevels[level as keyof typeof NameLevels];
+      }
+
+      const lvl = parseInt(level, 10);
+
+      if (!isNaN(lvl) && lvl >= 0) {
+        this.root.level = lvl;
+      }
+    }
+
     this.root.addHandler(new ConsoleHandler());
   }
 

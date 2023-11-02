@@ -86,7 +86,7 @@ export class PICSY {
     const sum = v.sum(0);
 
     const ret = v.div(sum, 0);
-    logger.info(`normalized evaluation matrix: \n${ret}`);
+    logger.debug(`normalized evaluation matrix: \n${ret}`);
 
     return ret;
   }
@@ -99,8 +99,8 @@ export class PICSY {
 
     const { wreal, wimag, eigenvector } = eig(SqMat2d.fromMat2d(this.normalized()));
 
-    logger.info(`eigenvalues: ${Array.from(wreal).map((v, i) => `${v} + ${wimag[i]}j`).join(', ')}`);
-    logger.info(`eigenvectors: \n${eigenvector}`);
+    logger.debug(`eigenvalues: ${Array.from(wreal).map((v, i) => `${v} + ${wimag[i]}j`).join(', ')}`);
+    logger.debug(`eigenvectors: \n${eigenvector}`);
 
     let idx = 0;
     let md = Infinity;
