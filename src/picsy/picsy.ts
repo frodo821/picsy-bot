@@ -103,6 +103,9 @@ export class PICSY {
 
     const { wreal, wimag, eigenvector } = eig(SqMat2d.fromMat2d(this.normalized()));
 
+    logger.info(`eigenvalues: ${Array.from(wreal).map((v, i) => `${v} + ${wimag[i]}j`).join(', ')}`);
+    logger.info(`eigenvectors: \n${eigenvector}`);
+
     let idx = 0;
     let md = Infinity;
     for (let i = 1; i < wreal.length; i++) {
