@@ -79,6 +79,8 @@ export class PICSY {
       }
     }
 
+    logger.info(`decay: ${ret}`);
+
     return ret;
   }
 
