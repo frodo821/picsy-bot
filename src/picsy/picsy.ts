@@ -68,15 +68,14 @@ export class PICSY {
     const now = Date.now();
     for (const fromIdx in this._lastPaid) {
       for (const toIdx in this._lastPaid[fromIdx]) {
-        if (fromIdx === toIdx) {
-          ret.set(+fromIdx, +toIdx, 1.0);
-          continue;
-        }
-
         const last = this._lastPaid[fromIdx][toIdx];
         const elapsed = now - last;
         ret.set(+fromIdx, +toIdx, this._val.get(+fromIdx, +toIdx) * Math.pow(1 - this._decay, elapsed / MS_PER_DAY));
       }
+    }
+
+    for (let i = 0; i < ret.size; i++) {
+      ret.set(i, i, 1.0);
     }
 
     return ret;
