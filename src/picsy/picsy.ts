@@ -96,7 +96,7 @@ export class PICSY {
       }
     }
 
-    this._eig = eigenvector.col(idx);
+    this._eig = eigenvector.row(idx);
   }
 
   recalculateEvaluations() {
