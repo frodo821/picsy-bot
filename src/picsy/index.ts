@@ -79,11 +79,11 @@ export default class PICSYManager {
     writeFileSync(flagfile, '', { flag: 'w' });
 
     // swap
-    rmSync(META_FILE);
+    if (existsSync(META_FILE)) rmSync(META_FILE);
     copyFileSync(metaswap, META_FILE);
     rmSync(metaswap);
 
-    rmSync(DATA_FILE);
+    if (existsSync(DATA_FILE)) rmSync(DATA_FILE);
     copyFileSync(matswap, DATA_FILE);
     rmSync(matswap);
 
