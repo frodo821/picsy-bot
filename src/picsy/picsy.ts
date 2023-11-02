@@ -138,6 +138,10 @@ export class PICSY {
     const now = Date.now();
     const elapsed = now - last;
 
+    if (amount <= 0) {
+      throw new Error('cannot transfer non-positive amount');
+    }
+
     if (fromIdx === undefined || toIdx === undefined) {
       throw new Error('invalid id');
     }
