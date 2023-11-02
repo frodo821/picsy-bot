@@ -82,23 +82,27 @@ export class ConsoleHandler implements Handler {
 
 export class Logger {
   private static readonly _loggers: Record<string, Logger> = {};
-  static readonly root = new Logger("(root)", NameLevels.INFO, null);
-
-  static {
-    if ('LOGLEVEL' in process.env) {
-      const level = process.env.LOGLEVEL!;
-
-      if (level in NameLevels) {
-        this.root.level = NameLevels[level as keyof typeof NameLevels];
-      }
-
-      const lvl = parseInt(level, 10);
-
-      if (!isNaN(lvl) && lvl >= 0) {
-        this.root.level = lvl;
-      }
+  static readonly root = new Logger("(root)", (() => {
+    if (!('LOGLEVEL' in process.env)) {
+      return NameLevels.INFO;
     }
 
+    const level = process.env.LOGLEVEL!;
+
+    if (level in NameLevels) {
+      return NameLevels[level as keyof typeof NameLevels];
+    }
+
+    const lvl = parseInt(level, 10);
+
+    if (!isNaN(lvl) && lvl >= 0) {
+      return lvl;
+    }
+
+    return NameLevels.INFO;
+  })(), null);
+
+  static {
     this.root.addHandler(new ConsoleHandler());
   }
 
