@@ -79,9 +79,14 @@ export class PICSY {
       }
     }
 
-    logger.info(`decay: ${ret}`);
-
     return ret;
+  }
+
+  private normalized() {
+    const v = this.calcDecay();
+    const sum = v.sum(0);
+
+    return v.div(sum, 0);
   }
 
   private updateEig() {
@@ -90,7 +95,7 @@ export class PICSY {
       return;
     }
 
-    const { wreal, wimag, eigenvector } = eig(SqMat2d.fromMat2d(this.calcDecay().mul(this._val.sum())));
+    const { wreal, wimag, eigenvector } = eig(SqMat2d.fromMat2d(this.normalized()));
 
     console.log(wreal, wimag);
     console.log(eigenvector.toString());

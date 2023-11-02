@@ -122,6 +122,34 @@ export class Mat2d {
   }
 
   /**
+   * divide each element of this matrix with another value
+   * @param value divisor
+   * @param axis divide along this axis. 1 for each column, 0 for each row. defaults to 1. if value is a number, this parameter is ignored.
+   * @returns a new Mat2d
+   */
+  div(value: number | Float64Array, axis?: number) {
+    if (typeof value === 'number') {
+      const data = new Float64Array(this._data.length);
+      data.set(this._data.map(v => v / value));
+      return new Mat2d(data, this._shape);
+    }
+
+    axis = axis ?? 1;
+
+    if (value.length !== this._shape[axis]) {
+      throw new Error(`data length ${value.length} does not match shape ${this._shape}`);
+    }
+
+    if (axis === 1) {
+      return new Mat2d(this._data.map((v, i) => v / value[i % this._shape[1]]), this._shape);
+    } else if (axis === 0) {
+      return new Mat2d(this._data.map((v, i) => v / value[Math.floor(i / this._shape[1])]), this._shape);
+    } else {
+      throw new Error(`axis out of range: ${axis}`);
+    }
+  }
+
+  /**
    * @param axis axis to calculate sum. 1 for each column, 0 for each row, 2 for all. defaults to 1
    * @returns a Float64Array of sum values
    */
