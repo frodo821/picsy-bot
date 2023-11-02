@@ -86,6 +86,8 @@ export class PICSY {
     const v = this.calcDecay();
     const sum = v.sum(0);
 
+    console.log(sum);
+
     for (let i = 0; i < sum.length; i++) {
       if (sum[i] === 0) {
         sum[i] = 1;
