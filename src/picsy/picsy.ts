@@ -86,6 +86,12 @@ export class PICSY {
     const v = this.calcDecay();
     const sum = v.sum(0);
 
+    for (let i = 0; i < sum.length; i++) {
+      if (sum[i] === 0) {
+        sum[i] = 1;
+      }
+    }
+
     const ret = v.div(sum, 0);
 
     logger.info(`normalized evaluation matrix: \n${ret}`);
