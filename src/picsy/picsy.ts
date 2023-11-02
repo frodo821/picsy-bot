@@ -10,9 +10,9 @@ function eig(m: SqMat2d) {
   const data = m.data;
   const wreal = new Float64Array(m.size);
   const wimag = new Float64Array(m.size);
-  const vl = new Float64Array(m.size * m.size);
+  const vl = new Float64Array(1);
   const vr = new Float64Array(m.size * m.size);
-  dgeev(NoEigenvector, Eigenvector, m.size, data, m.size, wreal, wimag, vl, m.size, vr, m.size)
+  dgeev(NoEigenvector, Eigenvector, m.size, data, m.size, wreal, wimag, vl, 1, vr, m.size)
 
   return {
     wreal,
