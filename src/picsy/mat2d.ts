@@ -173,6 +173,32 @@ export class Mat2d {
     }
   }
 
+  toString(): string {
+    if (this._shape[0] === 0 || this._shape[1] === 0) {
+      return '()';
+    }
+
+    if (this.shape[0] === 1) {
+      return `(${this.row(0).join(', ')})`;
+    }
+
+    const lparen = ['⎛', '⎜', '⎝'];
+    const rparen = ['⎞', '⎟', '⎠'];
+    const values = [] as string[][];
+
+    for (let i = 0; i < this.shape[0]; i++) {
+      values.push(Array.from(this.row(i)).map(it => it.toString()));
+    }
+
+    const maxlen = Math.max(...values.map(it => Math.max(...it.map(it => it.length))));
+
+    const v = values.map(row => row.map(it => it.padStart(maxlen, ' ')).join(' '));
+    const last = v.pop()!;
+    const first = v.shift()!;
+    const middle = v.map(row => `${lparen[1]}${row}${rparen[1]}`).join('\n');
+    return `${lparen[0]}${first}${rparen[0]}\n${middle}\n${lparen[2]}${last}${rparen[2]}`;
+  }
+
   reshape(shape: readonly [number, number]): Mat2d {
     if (this._shape[0] * this._shape[1] !== shape[0] * shape[1]) {
       throw new Error(`cannot reshape ${this._shape} to ${shape}`);
