@@ -126,6 +126,12 @@ export class PICSY {
     return this._eig!;
   }
 
+  get matrix(): SqMat2d {
+    const v = new Float64Array(this._val.data.length);
+    v.set(this._val.data);
+    return new SqMat2d(v, this._val.size);
+  }
+
   joined(id: string): boolean {
     return id in this._ids;
   }

@@ -143,7 +143,7 @@ export default class PICSYManager {
     this.picsy.transfer(from, to, amount);
   }
 
-  get evaluation(): Record<string, number> {
+  get contribution(): Record<string, number> {
     if (this.picsy === null) {
       throw new Error('PICSY not initialized');
     }
@@ -156,5 +156,19 @@ export default class PICSYManager {
     }
 
     return ret;
+  }
+
+  totalEvaluation(who: string): number {
+    if (this.picsy === null) {
+      throw new Error('PICSY not initialized');
+    }
+
+    const row = this.picsy.ids[who];
+
+    if (row === undefined) {
+      return 1;
+    }
+
+    return this.picsy.matrix.row(row).reduce((a, b) => a + b, 0);
   }
 }

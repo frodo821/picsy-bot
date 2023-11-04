@@ -35,8 +35,12 @@ register(tip, async (interaction) => {
   picsy.transfer(sender.id, to.id, amount);
   await interaction.followUp({ content: '成功！', ephemeral: true });
 
+  const total = picsy.totalEvaluation(sender.id);
+  const percent = amount / total * 100;
+  const value = (picsy.contribution[sender.id] * percent);
+
   await interaction.channel?.send({
-    content: `<@${to.id}> さんに <@${sender.id}> さんが ${amount} picsy を渡しました :tada:`,
+    content: `<@${to.id}> さんに <@${sender.id}> さんが ${percent.toFixed(2)}% の評価を付与しました (価値評価: ${value}) :tada:`,
   });
 });
 
@@ -54,7 +58,7 @@ register(karma, async (interaction) => {
 
   const picsy = await PICSYManager.getInstance();
 
-  const evals = picsy.evaluation;
+  const evals = picsy.contribution;
   const entries = Object.entries(evals);
 
   logger.debug(`evaluations: ${JSON.stringify(evals)}`);
