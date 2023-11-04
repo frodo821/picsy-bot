@@ -12,6 +12,9 @@ case "$1" in
   restart)
     picsy-bot-restart
     ;;
+  install)
+    picsy-bot-install
+    ;;
   *)
     echo "Usage: $0 {start|stop|restart}"
 esac

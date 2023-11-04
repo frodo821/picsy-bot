@@ -9,3 +9,5 @@ ExecStart=./service start
 ExecStop=./service stop
 ExecReload=./service restart
 Restart=always
+Type=forking
+User=picsy-bot

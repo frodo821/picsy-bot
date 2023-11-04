@@ -1,13 +1,34 @@
-# in your .bashrc or .zshrc:
+# if not register for service, please load in your .bashrc or .zshrc:
 # source ~/picsy-bot/manage
 
 VARDIR="/var/run/picsy-bot"
 PIDFILE="$VARDIR/.pid"
 RUNLOG="$VARDIR/.run.log"
+WORKDIR="/opt/picsy-bot"
+BINDIR="$WORKDIR/bin"
 
-if [ ! -d $VARDIR ]; then
-  mkdir -p $VARDIR
-fi
+export PICSY_ALTERNATE_DATA_DIRECTORY="$WORKDIR/data"
+
+function picsy-bot-install() {
+  echo creating service user...
+  sudo useradd -c "picsy-bot service user" -d $WORKDIR -m -s /usr/sbin/nologin picsy-bot
+
+  echo creating log directory...
+  if [ ! -d $VARDIR ]; then
+    sudo mkdir -p $VARDIR
+    sudo chown picsy-bot $VARDIR
+  fi
+
+  echo installing binaries...
+  sudo cp -a --verbose . $BINDIR
+  sudo chown -R picsy-bot $BINDIR
+
+  echo registering service...
+  sudo cp ./picsy-bot.service /etc/systemd/system/picsy-bot.service
+
+  echo enabling service...
+  sudo systemctl enable picsy-bot
+}
 
 function picsy-bot-up() {
   if [ -f $PIDFILE ]; then
@@ -19,7 +40,7 @@ function picsy-bot-up() {
     mv $RUNLOG $LOGNAME.`date +%Y%m%d%H%M%S`.log
   fi
   local CURRENT_PATH=`pwd`
-  cd ~/picsy-bot
+  cd $BINDIR
   nohup npm run bot > $RUNLOG 2>&1 &
   echo $! > $PIDFILE
   cd $CURRENT_PATH
