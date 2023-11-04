@@ -1,0 +1,39 @@
+# in your .bashrc or .zshrc:
+# source ~/picsy-bot/manage
+
+VARDIR="/var/run/picsy-bot"
+PIDFILE="$VARDIR/.pid"
+RUNLOG="$VARDIR/.run.log"
+
+if [ ! -d $VARDIR ]; then
+  mkdir -p $VARDIR
+fi
+
+function picsy-bot-up() {
+  if [ -f $PIDFILE ]; then
+    echo "picsy-bot is already running"
+    return
+  fi
+  if [ -f RUNLOG ]; then
+    local LOGNAME=${RUNLOG%.*}
+    mv $RUNLOG $LOGNAME.`date +%Y%m%d%H%M%S`.log
+  fi
+  local CURRENT_PATH=`pwd`
+  cd ~/picsy-bot
+  nohup npm run bot > $RUNLOG 2>&1 &
+  echo $! > $PIDFILE
+  cd $CURRENT_PATH
+}
+
+function picsy-bot-down() {
+  if [ ! -f $PIDFILE ]; then
+    echo "picsy-bot is not running"
+    return
+  fi
+  kill -SIGINT `cat $PIDFILE`
+  rm $PIDFILE
+}
+
+function picsy-bot-restart() {
+  picsy-bot-down && picsy-bot-up;
+}

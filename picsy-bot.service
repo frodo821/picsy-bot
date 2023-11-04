@@ -1,0 +1,11 @@
+[Unit]
+Description=Starts and stops the PICSY bot service
+
+[install]
+WantedBy=multi-user.target
+
+[Service]
+ExecStart=./service start
+ExecStop=./service stop
+ExecReload=./service restart
+Restart=always

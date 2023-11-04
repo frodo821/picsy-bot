@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+cd "$(dirname "$0")"
+source ./manage
+
+case "$1" in
+  start)
+    picsy-bot-up
+    ;;
+  stop)
+    picsy-bot-down
+    ;;
+  restart)
+    picsy-bot-restart
+    ;;
+  *)
+    echo "Usage: $0 {start|stop|restart}"
+esac
