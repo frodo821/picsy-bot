@@ -40,7 +40,7 @@ register(tip, async (interaction) => {
   const value = (picsy.contribution[sender.id] * percent);
 
   await interaction.channel?.send({
-    content: `<@${to.id}> さんに <@${sender.id}> さんが ${percent.toFixed(2)}% の評価を付与しました (価値評価: ${value}) :tada:`,
+    content: `<@${to.id}> さんに <@${sender.id}> さんが ${percent.toFixed(2)}% の評価を付与しました (価値評価: ${value.toFixed(2)}) :tada:`,
   });
 });
 
